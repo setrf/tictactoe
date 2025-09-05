@@ -32,33 +32,34 @@ const handleCellClick = (e) => {
 const handleCellPlayed = (clickedCell, clickedCellIndex) => {
   gameState[clickedCellIndex] = currentPlayer;
   clickedCell.classList.add(currentPlayer.toLowerCase());
+  clickedCell.classList.add('filled');
 };
 
 const handleResultValidation = () => {
-  let roundWon = false;
+  let winLine = null;
   for (let i = 0; i < winningConditions.length; i++) {
-    const winCondition = winningConditions[i];
-    let a = gameState[winCondition[0]];
-    let b = gameState[winCondition[1]];
-    let c = gameState[winCondition[2]];
-    if (a === '' || b === '' || c === '') {
-      continue;
-    }
-    if (a === b && b === c) {
-      roundWon = true;
-      break;
-    }
+    const line = winningConditions[i];
+    const a = gameState[line[0]];
+    const b = gameState[line[1]];
+    const c = gameState[line[2]];
+    if (!a || !b || !c) continue;
+    if (a === b && b === c) { winLine = line; break; }
   }
 
-  if (roundWon) {
+  if (winLine) {
     gameStatus.textContent = `Player ${currentPlayer} has won!`;
+    gameStatus.classList.remove('status--turn','status--draw');
+    gameStatus.classList.add('status--win');
+    winLine.forEach(i => cells[i].classList.add('win'));
     gameActive = false;
     return;
   }
 
-  let roundDraw = !gameState.includes('');
+  const roundDraw = !gameState.includes('');
   if (roundDraw) {
     gameStatus.textContent = 'Game ended in a draw!';
+    gameStatus.classList.remove('status--turn','status--win');
+    gameStatus.classList.add('status--draw');
     gameActive = false;
     return;
   }
@@ -69,6 +70,8 @@ const handleResultValidation = () => {
 const handlePlayerChange = () => {
   currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
   gameStatus.textContent = `It's ${currentPlayer}'s turn`;
+  gameStatus.classList.remove('status--win','status--draw');
+  gameStatus.classList.add('status--turn');
 };
 
 const handleRestartGame = () => {
@@ -76,9 +79,10 @@ const handleRestartGame = () => {
   gameActive = true;
   gameState = ['', '', '', '', '', '', '', '', ''];
   gameStatus.textContent = `It's ${currentPlayer}'s turn`;
+  gameStatus.classList.remove('status--win','status--draw');
+  gameStatus.classList.add('status--turn');
   cells.forEach(cell => {
-    cell.classList.remove('x');
-    cell.classList.remove('o');
+    cell.classList.remove('x','o','filled','win');
   });
 };
 
@@ -86,3 +90,4 @@ cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 restartButton.addEventListener('click', handleRestartGame);
 
 gameStatus.textContent = `It's ${currentPlayer}'s turn`;
+gameStatus.classList.add('status--turn');
