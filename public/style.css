@@ -27,6 +27,7 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-size: 16px; line-height: 26px;
+  font-variant-numeric: tabular-nums;
 }
 .container {
   max-width: 720px;
@@ -49,6 +50,8 @@ h1 { margin: 0 0 12px; letter-spacing: 0.2px; font-weight: 600; }
   border-radius: 8px;
   background: var(--color-bg-panel-2);
   border: 1px solid var(--color-line-hair-2);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 .cell {
@@ -64,6 +67,8 @@ h1 { margin: 0 0 12px; letter-spacing: 0.2px; font-weight: 600; }
   border-radius: 8px;
   transition: background 160ms cubic-bezier(0.2, 0.8, 0.2, 1), color 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
   outline: none;
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 .cell:not(.filled):hover { background: #16171a; }
