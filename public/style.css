@@ -37,12 +37,11 @@ body {
 h1 { margin: 0 0 12px; letter-spacing: 0.5px; }
 
 .game-board {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(3, var(--cell-size));
   grid-template-rows: repeat(3, var(--cell-size));
   gap: 8px;
   margin: 24px auto 12px;
-  width: calc(var(--cell-size) * 3 + 16px);
   padding: 12px;
   border-radius: 14px;
   background: rgba(255,255,255,0.04);
